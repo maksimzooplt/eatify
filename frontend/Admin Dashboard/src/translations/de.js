@@ -63,6 +63,7 @@ const de = {
     Dashboard: 'Instrumententafel',
     Configuration: 'Aufbau',
     Login: 'Anmeldung',
+    'Submit':'Afenbahen',
     Food: 'Essen',
     'Character limit of max length 50':
       'Zeichenbegrenzung von maximaler Länge 50',

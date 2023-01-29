@@ -10,10 +10,17 @@ import {
   Navbar,
   Nav,
   Container,
-  Media
+  Media,
+  NavItem,
+  FormGroup,
+  Input
 } from 'reactstrap'
 
 function AdminNavbar(props) {
+  const handleChange = event => {
+    localStorage.setItem('enatega-language', event.target.value)
+    props.i18n.changeLanguage(event.target.value)
+  }
   const { t } = props
   return (
     <>
@@ -26,6 +33,23 @@ function AdminNavbar(props) {
           </Link>
 
           <Nav className="align-items-center d-none d-md-flex" navbar>
+          <NavItem>
+              <FormGroup>
+                <Input
+                  type="select"
+                  name="select"
+                  defaultValue={localStorage.getItem('enatega-language')}
+                  id="exampleSelect"
+                  onChange={handleChange}
+                  onBlur={event => {}}>
+                  <option value="en">English</option>
+                  <option value="de">Deutsche</option>
+                  <option value="zh">中文</option>
+                  <option value="km">ភាសាខ្មែរ</option>
+                  <option value="fr">français</option>
+                </Input>
+              </FormGroup>
+            </NavItem>
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
                 <Media className="align-items-center">

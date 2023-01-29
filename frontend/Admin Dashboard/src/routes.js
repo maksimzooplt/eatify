@@ -11,6 +11,7 @@ import Options from './views/Options'
 import Addons from './views/Addons'
 import Coupons from './views/Coupons'
 import Dashboard from './views/Dashboard'
+import Analitics from './views/Analitycs'
 import Notifications from './views/Notifications'
 
 var routes = [
@@ -19,6 +20,14 @@ var routes = [
     name: 'Dashboard',
     icon: 'ni ni-tv-2 text-orange',
     component: Dashboard,
+    layout: '/admin',
+    appearInSidebar: true
+  },
+  {
+    path: '/analitics',
+    name: 'Analitics',
+    icon: 'ni ni-tv-2 text-orange',
+    component: Analitics,
     layout: '/admin',
     appearInSidebar: true
   },
