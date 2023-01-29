@@ -6,12 +6,16 @@ import TableTile from '../components/Dashboard/TableTile'
 import {
   Container,
   Row,
-  Card
+  Card,
+  FormGroup
 } from 'reactstrap'
 
 import Header from '../components/Headers/Header.jsx'
 
 const Dashboard = props => {
+  const [showQRView, setShowQRView] = useState(true)
+
+  const adminData = JSON.parse(localStorage.getItem('user-enatega'))
 
   return (
     <>
@@ -19,12 +23,30 @@ const Dashboard = props => {
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row className="mt-5">
+        
           <Card className="col-12">
+          <label
+          className="form-control-label"
+          htmlFor="input-available">
+          QR code
+        </label>
+        <FormGroup>
+          <label className="custom-toggle">
+            <input
+              defaultChecked={showQRView}
+              type="checkbox"
+              onChange={event => {
+                setShowQRView(event.target.checked)
+              }}
+            />
+            <span className="custom-toggle-slider rounded-circle" />
+          </label>
+        </FormGroup>
             <Row className="mt-5">
-              <TableTile className="col-3" tableNumber='12' status="Ordering"/>
-              <TableTile className="col-3" tableNumber='12' status="Cooking"/>
-              <TableTile className="col-3" tableNumber='12' status="Watching Menu"/>
-              <TableTile className="col-3" tableNumber='12' status="In Progress"/>
+              <TableTile className="col-3" isQRView={showQRView} adminData={adminData.userId} tableNumber='12' status="Ordering"/>
+              <TableTile className="col-3" isQRView={showQRView} adminData={adminData.userId} tableNumber='13' status="Cooking"/>
+              <TableTile className="col-3" isQRView={showQRView} adminData={adminData.userId} tableNumber='14' status="Watching Menu"/>
+              <TableTile className="col-3" isQRView={showQRView} adminData={adminData.userId} tableNumber='15' status="In Progress"/>
             </Row>  
           </Card>
 

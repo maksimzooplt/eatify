@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal } from 'reactstrap'
+import QRcode from 'qrcode.react'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     width: '260px',
     borderRadius: '12px',
-    maxHeight: (props) => props.expanded ? '250px' : '110px'
+    maxHeight: (props) => props.expanded || !props.isQRView ? '250px' : '110px'
   },
   cardHeader: {
     display: 'flex',
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardBody: {
     padding: theme.spacing(2),
+    display: 'flex'
   },
   position: {
     display: 'flex',
@@ -67,8 +69,21 @@ const TableTile = (props) => {
     setExpanded(!expanded);
   };
 
-  return (
-    <div className={classes.card}>
+  const downloadQR = () => {
+    const canvas = document.getElementById("myqr");
+    const pngUrl = canvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    let downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = "myqr.png";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+};
+
+  return (<>
+    {props.isQRView ? (<div className={classes.card}>
       <div className={classes.cardHeader}>
         <div>
           <h3 className={classes.cardTitle}>Table {props.tableNumber}</h3>
@@ -107,7 +122,28 @@ const TableTile = (props) => {
           )}
         </div>
       )}
+    </div>) : (
+    <div className={classes.card}>
+        <div className={classes.cardHeader}>
+        <div>
+            <h3 className={classes.cardTitle}>Table {props.tableNumber}</h3>
+            <p className={classes.cardStatus}>QRCode</p>
+        </div>
+        </div>
+        <div className={classes.cardBody}>
+            <QRcode 
+                id="myqr"
+                value={`https://google.com/${props.adminData}/${props.tableNumber}`} 
+                size={100}
+                includeMargin={true}
+            />
+            <button onClick={downloadQR} style={{marginLeft:10}}>
+                Download QR
+            </button>
+        </div>
     </div>
+    )}
+  </>
   );
 };
 
