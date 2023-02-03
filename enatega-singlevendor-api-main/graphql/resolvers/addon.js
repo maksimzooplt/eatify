@@ -4,7 +4,6 @@ const { transformAddon } = require('./merge')
 module.exports = {
   Query: {
     addons: async(_, args, context) => {
-      console.log('addons')
       try {
         const addons = await Addon.find({ is_active: true })
         return addons.map(addon => {
@@ -16,7 +15,6 @@ module.exports = {
       }
     },
     allAddons: async(_, args, context) => {
-      console.log('allAddons')
       try {
         const addons = await Addon.find({ is_active: true }).sort({
           createdAt: -1
@@ -32,7 +30,6 @@ module.exports = {
   },
   Mutation: {
     createAddons: async(_, args, context) => {
-      console.log('createAddon')
       try {
         const addons = await Addon.insertMany(args.addonInput)
         return addons.map(addon => {
@@ -44,7 +41,6 @@ module.exports = {
       }
     },
     editAddon: async(_, args, context) => {
-      console.log('editAddon')
       try {
         const addon = await Addon.findById(args.addonInput._id)
         if (!addon) {
@@ -64,7 +60,6 @@ module.exports = {
       }
     },
     deleteAddon: async(_, args, context) => {
-      console.log('deleteAddon')
       try {
         const addon = await Addon.findById(args.id)
         addon.is_active = false
